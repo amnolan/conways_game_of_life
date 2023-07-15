@@ -2,7 +2,6 @@
 Conways Game of Life, a zero player game single-cycle implementation.
 
 # Sample Test Run Output
-
     =================START===================
     | | | |
     | |■| |
@@ -19,8 +18,8 @@ Conways Game of Life, a zero player game single-cycle implementation.
     | |■| |
     
     | | | |
-    |■|■|■|
-    | |■|■|
+    | | | |
+    | | | |
     
     ==================END====================
     =================START===================
@@ -45,12 +44,12 @@ Conways Game of Life, a zero player game single-cycle implementation.
     | |■|■| |■|■|■|
     
     | | | |■|■| |■|
-    |■| | | | | |■|
     | |■| | | | |■|
-    | |■|■| | | | |
-    | | | |■|■| |■|
-    |■| |■|■|■| | |
-    | |■| | | |■| |
+    |■| | |■|■|■|■|
+    |■| | | | | | |
+    |■| |■| |■|■|■|
+    |■| | | | | | |
+    | |■| | | | | |
     
     ==================END====================
     =================START===================
@@ -69,12 +68,11 @@ Conways Game of Life, a zero player game single-cycle implementation.
     |■| |■|■|
     | |■|■|■|
     
-    | | | |■|
-    |■| | |■|
-    |■| | |■|
+    | | | | |
     | |■|■|■|
+    |■| | | |
+    | |■|■| |
     
     ==================END====================
     
     Process finished with exit code 0
-    
