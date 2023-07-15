@@ -1,12 +1,31 @@
 package com.company;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class GameCycleTest {
+
+    boolean debugLogging = false;
+
+    @BeforeEach
+    void printStartSeparator(){
+        System.out.println("=================START===================");
+        if(debugLogging){
+            System.out.println("LIFE ARRAY BEFORE TRANSITION:\n");
+        }
+    }
+
+    @AfterEach
+    void printEndSeparator(){
+        if(debugLogging){
+            System.out.println("LIFE ARRAY AFTER TRANSITION:\n");
+        }
+        System.out.println("==================END====================");
+    }
 
     @Test
     void doesTheThing(){
@@ -16,21 +35,23 @@ class GameCycleTest {
 
     @Test
     void testACycleDeadWithLT2LivingFriends(){
-        // three living friends
-        // 1, 0 should be DEAD at the end
         boolean[][] lifeArray = {
                 {false,false,false},
                 {true,false,false},
                 {false,false,false},
         };
-        System.out.println("LIFE ARRAY BEFORE TRANSITION:");
         // make sure env works
         GameCycle gameCycle = new GameCycle();
-        boolean [][] modifiedList = gameCycle.transition(lifeArray);
-        System.out.println("LIFE ARRAY AFTER TRANSITION:");
-        System.out.println(Arrays.deepToString(modifiedList));
-        // assert it is DEAD
-        assertFalse(lifeArray[1][0]);
+        gameCycle.printRaAsDorAAndReturn(lifeArray);
+        gameCycle.transition(lifeArray);
+        String actual = gameCycle.printRaAsDorAAndReturn(lifeArray);
+        // assert matches
+        assertEquals(
+                "| | | |\n" +
+                "| | | |\n" +
+                "| | | |\n",
+                actual
+        );
     }
 
     @Test
@@ -41,14 +62,38 @@ class GameCycleTest {
                 {false,true,false},
                 {false,false,false},
         };
-        System.out.println("LIFE ARRAY BEFORE TRANSITION:");
+        GameCycle gameCycle = new GameCycle();
+        gameCycle.printRaAsDorAAndReturn(lifeArray);
+
+        gameCycle.transition(lifeArray);
+        String actual = gameCycle.printRaAsDorAAndReturn(lifeArray);
+        assertEquals(
+        "| | | |\n" +
+                "| | | |\n" +
+                "| | | |\n",
+                actual
+        );
+    }
+
+    @Test
+    void testACycleDeadWith2LivingFriends(){
+        // three living friends
+        boolean[][] lifeArray = {
+                {false,false,false},
+                {true,false,false},
+                {false,true,false},
+        };
         // make sure env works
         GameCycle gameCycle = new GameCycle();
-        boolean [][] modifiedList = gameCycle.transition(lifeArray);
-        System.out.println("LIFE ARRAY AFTER TRANSITION:");
-        System.out.println(Arrays.deepToString(modifiedList));
-        // assert it is DEAD
-        assertFalse(lifeArray[1][1]);
+        gameCycle.printRaAsDorAAndReturn(lifeArray);
+        gameCycle.transition(lifeArray);
+        String actual = gameCycle.printRaAsDorAAndReturn(lifeArray);
+        assertEquals(
+        "| | | |\n" +
+                "| | | |\n" +
+                "| | | |\n",
+                actual
+        );
     }
 
     @Test
@@ -60,14 +105,63 @@ class GameCycleTest {
                 {true,false,true},
                 {false,true,false},
         };
-        System.out.println("LIFE ARRAY BEFORE TRANSITION:");
-        // make sure env works
         GameCycle gameCycle = new GameCycle();
-        boolean [][] modifiedList = gameCycle.transition(lifeArray);
-        System.out.println("LIFE ARRAY AFTER TRANSITION:");
-        System.out.println(Arrays.deepToString(modifiedList));
-        // assert it is ALIVE
-        assertTrue(lifeArray[1][1]);
+        gameCycle.printRaAsDorAAndReturn(lifeArray);
+        gameCycle.transition(lifeArray);
+        String actual = gameCycle.printRaAsDorAAndReturn(lifeArray);
+        assertEquals(
+        "| | | |\n" +
+                "|■|■|■|\n" +
+                "| |■|■|\n",
+                actual
+        );
     }
 
+    @Test
+    void testACycleWithMoreAlive(){
+        // three living friends
+        // 1, 0 should be DEAD at the end
+        boolean[][] lifeArray = {
+                {false,false,false,true},
+                {true,false,true,false},
+                {true,false,true,true},
+                {false,true,true,true},
+        };
+        GameCycle gameCycle = new GameCycle();
+        gameCycle.printRaAsDorAAndReturn(lifeArray);
+        gameCycle.transition(lifeArray);
+        String actual = gameCycle.printRaAsDorAAndReturn(lifeArray);
+        assertEquals(
+        "| | | |■|\n" +
+                "|■| | |■|\n" +
+                "|■| | |■|\n" +
+                "| |■|■|■|\n",
+                actual);
+    }
+
+    @Test
+    void testACycleWithEvenMoreAlive(){
+        boolean[][] lifeArray = {
+                {false,false,false,true,true,false,true},
+                {true,false,true,false,true,true,true},
+                {true,false,true,true,true,true,true},
+                {false,true,true,true,false,false,false},
+                {true,false,true,true,true,true,true},
+                {true,false,true,true,false,false,true},
+                {false,true,true,false,true,true,true},
+        };
+        GameCycle gameCycle = new GameCycle();
+        gameCycle.printRaAsDorAAndReturn(lifeArray);
+        gameCycle.transition(lifeArray);
+        String actual = gameCycle.printRaAsDorAAndReturn(lifeArray);
+        assertEquals(
+                "| | | |■|■| |■|\n" +
+                "|■| | | | | |■|\n" +
+                "| |■| | | | |■|\n" +
+                "| |■|■| | | | |\n" +
+                "| | | |■|■| |■|\n" +
+                "|■| |■|■|■| | |\n" +
+                "| |■| | | |■| |\n",
+                actual);
+    }
 }
