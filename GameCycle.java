@@ -31,9 +31,8 @@ public class GameCycle {
         for(int i = topRow; i <= bottomRow; i++){
 
             for(int j = farLeft; j <= farRight; j++ ){
-                // don't allow negatives or out of bounds locations
+                // don't add current location
                 if(i != currentLocI || j != currentLocJ){
-                    // don't add current location
                     Pair pair = new Pair(i,j);
                     neighborTuples.add(pair);
                 }
