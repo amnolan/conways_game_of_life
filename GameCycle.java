@@ -31,8 +31,9 @@ public class GameCycle {
         for(int i = topRow; i <= bottomRow; i++){
 
             for(int j = farLeft; j <= farRight; j++ ){
-                // don't add current location
+                // don't allow negatives or out of bounds locations
                 if(i != currentLocI || j != currentLocJ){
+                    // don't add current location
                     Pair pair = new Pair(i,j);
                     neighborTuples.add(pair);
                 }
@@ -53,7 +54,7 @@ public class GameCycle {
     public int getLiveNeighbors(boolean[][] oldState, ArrayList<Pair> neighbors){
         int livingNeighbors = 0;
         for(Pair pair : neighbors){
-            if(oldState[pair.getJ()][pair.getI()]){
+            if(oldState[pair.getI()][pair.getJ()]){
                 livingNeighbors += 1;
             }
         }
@@ -85,6 +86,7 @@ public class GameCycle {
                     // EXACTLY 2 or 3 IMPLICITLY SURVIVES (take no action)
                 }else{
                     // current cell is dead
+                    livingNeighbors = getLiveNeighbors(oldState,neighbors);
                     if(livingNeighbors==3){
                         // any dead cell with EXACTLY 3 live neighbors becomes alive
                         oldState[i][j] = true;
