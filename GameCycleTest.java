@@ -111,8 +111,8 @@ class GameCycleTest {
         String actual = gameCycle.printRaAsDorAAndReturn(lifeArray);
         assertEquals(
         "| | | |\n" +
-                "|■|■|■|\n" +
-                "| |■|■|\n",
+                "| | | |\n" +
+                "| | | |\n",
                 actual
         );
     }
@@ -132,10 +132,10 @@ class GameCycleTest {
         gameCycle.transition(lifeArray);
         String actual = gameCycle.printRaAsDorAAndReturn(lifeArray);
         assertEquals(
-        "| | | |■|\n" +
-                "|■| | |■|\n" +
-                "|■| | |■|\n" +
-                "| |■|■|■|\n",
+        "| | | | |\n" +
+                "| |■|■|■|\n" +
+                "|■| | | |\n" +
+                "| |■|■| |\n",
                 actual);
     }
 
@@ -155,13 +155,13 @@ class GameCycleTest {
         gameCycle.transition(lifeArray);
         String actual = gameCycle.printRaAsDorAAndReturn(lifeArray);
         assertEquals(
-                "| | | |■|■| |■|\n" +
-                "|■| | | | | |■|\n" +
+        "| | | |■|■| |■|\n" +
                 "| |■| | | | |■|\n" +
-                "| |■|■| | | | |\n" +
-                "| | | |■|■| |■|\n" +
-                "|■| |■|■|■| | |\n" +
-                "| |■| | | |■| |\n",
+                "|■| | |■|■|■|■|\n" +
+                "|■| | | | | | |\n" +
+                "|■| |■| |■|■|■|\n" +
+                "|■| | | | | | |\n" +
+                "| |■| | | | | |\n",
                 actual);
     }
 }
