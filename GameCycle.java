@@ -85,7 +85,6 @@ public class GameCycle {
                     // EXACTLY 2 or 3 IMPLICITLY SURVIVES (take no action)
                 }else{
                     // current cell is dead
-                    livingNeighbors = getLiveNeighbors(oldState,neighbors);
                     if(livingNeighbors==3){
                         // any dead cell with EXACTLY 3 live neighbors becomes alive
                         oldState[i][j] = true;
