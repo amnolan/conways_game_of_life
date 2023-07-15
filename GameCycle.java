@@ -4,31 +4,50 @@ import java.util.ArrayList;
 
 public class GameCycle {
 
+    boolean debug = false;
+
+    public GameCycle(){
+
+    }
+
+    public GameCycle(boolean debug){
+        this.debug = debug;
+    }
+
     public ArrayList<Pair> calculateNeigbors(int height, int width, int currentLocI, int currentLocJ){
 
         ArrayList<Pair> neighborTuples = new ArrayList<>();
 
         int topRow = currentLocI - 1;
+        topRow = (Math.max(topRow, 0));
         int bottomRow = currentLocI + 1;
+        bottomRow = (Math.min(bottomRow, height-1));
 
         int farLeft = currentLocJ - 1;
+        farLeft = (Math.max(farLeft, 0));
         int farRight = currentLocJ + 1;
+        farRight = (Math.min(width-1, farRight));
 
         for(int i = topRow; i <= bottomRow; i++){
 
             for(int j = farLeft; j <= farRight; j++ ){
                 // don't allow negatives or out of bounds locations
-                if(i >= 0 && i < height && j >= 0 && j < width){
+                if(i != currentLocI || j != currentLocJ){
                     // don't add current location
-                    if(currentLocI != i || currentLocJ != j){
-                        Pair pair = new Pair(i,j);
-                        neighborTuples.add(pair);
-                    }
+                    Pair pair = new Pair(i,j);
+                    neighborTuples.add(pair);
                 }
             }
 
         }
-        System.out.println("neighbor tuples, excluding self: " + neighborTuples);
+        if(debug){
+            System.out.println("\nneighbor tuples, excluding self:");
+            System.out.println("\n" + "i: " + currentLocI + ", j: " + currentLocJ);
+            for(int i = 0; i < neighborTuples.size(); i++){
+                System.out.print(neighborTuples.get(i));
+            }
+            System.out.println();
+        }
         return neighborTuples;
     }
 
@@ -38,7 +57,6 @@ public class GameCycle {
             if(oldState[pair.getJ()][pair.getI()]){
                 livingNeighbors += 1;
             }
-            System.out.println();
         }
         return livingNeighbors;
     }
@@ -48,8 +66,10 @@ public class GameCycle {
         int height = oldState.length;
         int width = oldState[1].length;
 
-        System.out.println("Curr height:" + height);
-        System.out.println("Curr width:" + width);
+        if(debug){
+            System.out.println("\nCurr height:" + height);
+            System.out.println("Curr width:" + width);
+        }
 
         for(int i = 0; i < oldState.length; i++){
             for(int j = 0; j < oldState[i].length; j++){
@@ -76,5 +96,20 @@ public class GameCycle {
         }
         // returned modified list
         return oldState;
+    }
+
+    public String printRaAsDorAAndReturn(boolean [][] raToPrint){
+        StringBuilder stringBuilder = new StringBuilder();
+        for(int i = 0; i < raToPrint.length; i++){
+            for(int j = 0; j < raToPrint[i].length; j++){
+                stringBuilder.append("|");
+                stringBuilder.append((raToPrint[i][j]) ? "■" : " ");
+                if(j == raToPrint[i].length - 1){
+                    stringBuilder.append("|\n");
+                }
+            }
+        }
+        System.out.println(stringBuilder);
+        return stringBuilder.toString();
     }
 }
